@@ -42,6 +42,7 @@ class MovieList extends Component {
         </View>
 
         <FlatList
+          contentContainerStyle={{paddingBottom: 70}}
           data={this.props.movie.results}
           progressViewOffset={5}
           initialNumToRender={5}
