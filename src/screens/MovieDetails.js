@@ -9,7 +9,7 @@ export default class MovieDetails extends Component {
         <View>
           <View style={styles.card}>
             <Text style={styles.title}>
-              {this.props.route.params.data.title} (YEAR)
+              {this.props.route.params.data.title}
             </Text>
           </View>
           <Image

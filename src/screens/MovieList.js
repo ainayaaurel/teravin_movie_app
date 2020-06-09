@@ -9,8 +9,8 @@ import {
   Modal,
   ScrollView,
 } from 'react-native';
-import {Header, Card, Image, Rating} from 'react-native-elements';
-import {Toast} from 'native-base';
+import {Header, Card, Image, Rating, Button} from 'react-native-elements';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 // import redux
@@ -21,27 +21,23 @@ class MovieList extends Component {
   state = {
     movie: [],
     currentPage: 1,
+    showModal: false,
   };
 
   getNewData = () => {
+    this.setState({currentPage: this.state.currentPage + 1});
     this.props.getDataMovie(this.state.currentPage + 1);
   };
-  modalShow = () => {
-    setTimeout(() => {
-      Toast.show({
-        text: 'List movie has been updated !',
-        buttonText: 'Showing',
-        onClose: (reason) => {
-          reason === 'user' ? this.getNewData() : null;
-        },
-        duration: 10000,
-        buttonTextStyle: {color: '#fff'},
-        buttonStyle: {backgroundColor: '#2196F3'},
-      });
-    }, 20000);
-  };
+
+  // prevData = () => {
+  //   this.props.getDataMovie(this.state.currentPage - 1);
+  // };
+
   componentDidMount() {
     this.props.getDataMovie(this.state.currentPage);
+    setTimeout(() => {
+      this.setState({showModal: true});
+    }, 60000);
   }
   render() {
     console.log('ini movie', this.props.movie);
@@ -113,6 +109,52 @@ class MovieList extends Component {
             </TouchableOpacity>
           )}
         />
+        {this.state.showModal ? (
+          <View
+            style={{
+              shadowOpacity: 0.8,
+              shadowRadius: 12.35,
+
+              elevation: 14,
+              height: 60,
+              backgroundColor: '#fff',
+
+              position: 'absolute',
+              bottom: '6%',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <View style={{width: 300}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                }}>
+                <Text style={{fontWeight: 'bold', fontSize: 16, width: '50%'}}>
+                  List movie has been updated !
+                </Text>
+                <Button
+                  buttonStyle={{backgroundColor: '#E44752'}}
+                  containerStyle={{margin: 0}}
+                  titleStyle={{fontSize: 14}}
+                  title="Showing"
+                  onPress={this.getNewData}
+                />
+                {/* <Button
+                buttonStyle={{backgroundColor: '#043354'}}
+                containerStyle={{margin: 0, width: '20%'}}
+                titleStyle={{fontSize: 14}}
+                title="Prev"
+                onPress={this.prevData}
+                type="outline"
+              /> */}
+              </View>
+            </View>
+          </View>
+        ) : null}
       </SafeAreaView>
     );
   }
