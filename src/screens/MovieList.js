@@ -6,9 +6,11 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView,
+  Modal,
   ScrollView,
 } from 'react-native';
 import {Header, Card, Image, Rating} from 'react-native-elements';
+import {Toast} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 // import redux
@@ -21,6 +23,23 @@ class MovieList extends Component {
     currentPage: 1,
   };
 
+  getNewData = () => {
+    this.props.getDataMovie(this.state.currentPage + 1);
+  };
+  modalShow = () => {
+    setTimeout(() => {
+      Toast.show({
+        text: 'List movie has been updated !',
+        buttonText: 'Showing',
+        onClose: (reason) => {
+          reason === 'user' ? this.getNewData() : null;
+        },
+        duration: 10000,
+        buttonTextStyle: {color: '#fff'},
+        buttonStyle: {backgroundColor: '#2196F3'},
+      });
+    }, 20000);
+  };
   componentDidMount() {
     this.props.getDataMovie(this.state.currentPage);
   }
@@ -35,9 +54,9 @@ class MovieList extends Component {
               backgroundColor: '#E44752',
               padding: '2%',
             }}
-            leftComponent={{icon: 'menu', color: '#fff'}}
-            centerComponent={{text: 'LIST MOVIE', style: {color: '#fff'}}}
-            rightComponent={{icon: 'bookmark', color: '#fff'}}
+            // leftComponent={{icon: 'menu', color: '#fff'}}
+            centerComponent={{text: 'NEUFLIX', style: {color: '#fff'}}}
+            // rightComponent={{icon: 'bookmark', color: '#fff'}}
           />
         </View>
 
