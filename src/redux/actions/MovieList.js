@@ -1,9 +1,9 @@
 import axios from 'axios';
 import config from '../../utils/config';
 
-export const getDataMovie = () => async (dispatch) => {
+export const getDataMovie = (page) => async (dispatch) => {
   try {
-    const res = await axios.get(config.APP_API);
+    const res = await axios.get(config.APP_API.concat(`&page=${page}`));
     console.log(res.data);
     if (res.data) {
       dispatch({
