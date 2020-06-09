@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  SafeAreaView,
+} from 'react-native';
 import {Header, Card, Button, Image, Rating} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -11,11 +18,6 @@ class MovieList extends Component {
   state = {
     movie: [],
   };
-  // changeScreenToMovieDetails = () => {
-  //   this.props.navigation.navigate('moviedetails', {
-  //     data:
-  //   });
-  // };
 
   componentDidMount() {
     this.props.getDataMovie();
@@ -23,7 +25,7 @@ class MovieList extends Component {
   render() {
     console.log('ini movie', this.props.movie);
     return (
-      <View>
+      <SafeAreaView>
         <View>
           <Header
             containerStyle={{marginTop: -30}}
@@ -32,46 +34,61 @@ class MovieList extends Component {
             rightComponent={{icon: 'home', color: '#fff'}}
           />
         </View>
-        <ScrollView>
-          <View>
-            {this.props.movie.results &&
-              this.props.movie.results.map((v, i) => {
-                return (
-                  <Card>
-                    <View style={styles.coloum}>
-                      <View>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.props.navigation.navigate('moviedetails', {
-                              data: v,
-                            });
-                          }}>
-                          <Image
-                            source={{
-                              uri: `https://image.tmdb.org/t/p/original/${v.poster_path}`,
-                            }}
-                            style={{width: 100, height: 140}}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                      <View style={styles.desc}>
-                        <Text>{v.original_title}</Text>
-                        <Text>Playing On {v.release_date}</Text>
-                        <Rating
-                          readonly
-                          startingValue={v.vote_average / 2}
-                          ratingCount={5}
-                          imageSize={20}
-                          style={{alignItems: 'flex-start'}}
-                        />
-                      </View>
-                    </View>
-                  </Card>
-                );
-              })}
-          </View>
-        </ScrollView>
-      </View>
+        <FlatList
+          data={this.props.movie.results}
+          progressViewOffset={5}
+          initialNumToRender={5}
+          maxToRenderPerBatch={5}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('moviedetails', {
+                  data: item,
+                });
+              }}>
+              <Card>
+                <View style={styles.coloum}>
+                  <View>
+                    <Image
+                      source={{
+                        uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
+                      }}
+                      style={{width: 100, height: 140}}
+                    />
+                  </View>
+                  <View style={styles.desc}>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: 15,
+                        textTransform: 'uppercase',
+                      }}>
+                      {item.original_title}
+                    </Text>
+                    <Text>Playing On {item.release_date}</Text>
+                    <Text
+                      style={{
+                        color: '#EDD15C',
+                        fontSize: 15,
+                        fontWeight: 'bold',
+                        marginLeft: '4%',
+                      }}>
+                      Rating ({item.vote_average}/10)
+                    </Text>
+                    <Rating
+                      readonly
+                      startingValue={item.vote_average / 2}
+                      ratingCount={5}
+                      imageSize={20}
+                      style={{alignItems: 'flex-start'}}
+                    />
+                  </View>
+                </View>
+              </Card>
+            </TouchableOpacity>
+          )}
+        />
+      </SafeAreaView>
     );
   }
 }
