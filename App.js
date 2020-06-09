@@ -6,7 +6,8 @@ import {store, persistor} from './src/redux/store';
 import MainHome from './src/screens/StackScreen';
 import NetInfo from '@react-native-community/netinfo';
 import {SafeAreaView, Text, View} from 'react-native';
-import {Image} from 'react-native-elements';
+import {Image, Button} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const App = () => {
   const [isInternetReachable, setIsInternetReachable] = useState(false);
@@ -19,7 +20,13 @@ const App = () => {
     };
   }, []);
   if (isInternetReachable) {
-    return null;
+    return (
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <MainHome />
+        </PersistGate>
+      </Provider>
+    );
   }
   return (
     <View
@@ -43,10 +50,12 @@ const App = () => {
         <Text style={{textAlign: 'center', fontSize: 28, fontWeight: 'bold'}}>
           Ooops!
         </Text>
-        <Text style={{textAlign: 'center', fontSize: 18}}>
+        <Text style={{textAlign: 'center', fontSize: 15}}>
           No Internet Connection Found
         </Text>
-        <Text>Check your connection</Text>
+        <Text style={{textAlign: 'center', fontSize: 15}}>
+          Check your connection
+        </Text>
       </View>
     </View>
   );
@@ -56,11 +65,7 @@ export default App;
 // export default class App extends Component {
 //   render() {
 //     return (
-//       <Provider store={store}>
-//         <PersistGate loading={null} persistor={persistor}>
-//           <MainHome />
-//         </PersistGate>
-//       </Provider>
+
 //     );
 //   }
 // }
