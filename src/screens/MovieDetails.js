@@ -9,7 +9,7 @@ export default class MovieDetails extends Component {
         <View>
           <View style={styles.card}>
             <Text style={styles.title}>
-              {this.props.route.params.data.title}
+              {this.props.route.params.data.title} (YEAR)
             </Text>
           </View>
           <Image
@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'white',
     marginBottom: 5,
-    height: 50,
     padding: '5%',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -81,9 +80,8 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 25,
-    textTransform: 'capitalize',
-    marginLeft: 20,
+    fontSize: 20,
+    textTransform: 'uppercase',
   },
 
   subtitle: {
