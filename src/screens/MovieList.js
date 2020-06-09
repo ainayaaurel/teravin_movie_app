@@ -6,21 +6,23 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView,
+  ScrollView,
 } from 'react-native';
-import {Header, Card, Button, Image, Rating} from 'react-native-elements';
+import {Header, Card, Image, Rating} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+// import redux
 import {connect} from 'react-redux';
 import {getDataMovie} from '../redux/actions/MovieList';
-import {ScrollView} from 'react-native-gesture-handler';
 
 class MovieList extends Component {
   state = {
     movie: [],
+    currentPage: 1,
   };
 
   componentDidMount() {
-    this.props.getDataMovie();
+    this.props.getDataMovie(this.state.currentPage);
   }
   render() {
     console.log('ini movie', this.props.movie);
@@ -28,12 +30,17 @@ class MovieList extends Component {
       <SafeAreaView>
         <View>
           <Header
-            containerStyle={{marginTop: -30}}
+            containerStyle={{
+              marginTop: -25,
+              backgroundColor: '#E44752',
+              padding: '2%',
+            }}
             leftComponent={{icon: 'menu', color: '#fff'}}
             centerComponent={{text: 'LIST MOVIE', style: {color: '#fff'}}}
-            rightComponent={{icon: 'home', color: '#fff'}}
+            rightComponent={{icon: 'bookmark', color: '#fff'}}
           />
         </View>
+
         <FlatList
           data={this.props.movie.results}
           progressViewOffset={5}
@@ -57,15 +64,12 @@ class MovieList extends Component {
                     />
                   </View>
                   <View style={styles.desc}>
-                    <Text
-                      style={{
-                        fontWeight: 'bold',
-                        fontSize: 15,
-                        textTransform: 'uppercase',
-                      }}>
-                      {item.original_title}
-                    </Text>
-                    <Text>Playing On {item.release_date}</Text>
+                    <View style={{width: '84%'}}>
+                      <Text style={styles.labelTitle}>
+                        {item.original_title}
+                      </Text>
+                    </View>
+                    <Text>Release : {item.release_date}</Text>
                     <Text
                       style={{
                         color: '#EDD15C',
@@ -82,6 +86,7 @@ class MovieList extends Component {
                       imageSize={20}
                       style={{alignItems: 'flex-start'}}
                     />
+                    <Text>Popularity : {item.popularity}</Text>
                   </View>
                 </View>
               </Card>
@@ -98,7 +103,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   desc: {
-    marginLeft: 10,
+    padding: '5%',
+    justifyContent: 'space-between',
+  },
+  labelTitle: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    textTransform: 'uppercase',
+    backgroundColor: '#043354',
+    color: 'white',
+
+    borderRadius: 4,
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    paddingBottom: '2%',
+    paddingTop: '2%',
+    textAlign: 'left',
   },
 });
 
