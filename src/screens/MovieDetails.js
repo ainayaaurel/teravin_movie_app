@@ -54,7 +54,7 @@ export default class MovieDetails extends Component {
             </Text>
           </View>
           <View style={styles.desc}>
-            <Text style={styles.subtitle}>Description Details</Text>
+            <Text style={styles.subtitle}>Language</Text>
             <Text style={styles.caption}>
               Language : {this.props.route.params.data.original_language}
             </Text>
@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginBottom: 5,
   },
-
   title: {
     fontSize: 20,
     textTransform: 'uppercase',
