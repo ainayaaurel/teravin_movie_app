@@ -8,10 +8,12 @@ import NetInfo from '@react-native-community/netinfo';
 import {SafeAreaView, Text, View} from 'react-native';
 import {Image, Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SplashScreen from 'react-native-splash-screen';
 
 const App = () => {
   const [isInternetReachable, setIsInternetReachable] = useState(false);
   useEffect(() => {
+    SplashScreen.hide();
     const unsubscribe = NetInfo.addEventListener((state) => {
       setIsInternetReachable(state.isInternetReachable);
     });
