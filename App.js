@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from 'react';
-// import React, {Component} from 'react';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {store, persistor} from './src/redux/store';
 import MainHome from './src/screens/StackScreen';
 import NetInfo from '@react-native-community/netinfo';
-import {SafeAreaView, Text, View} from 'react-native';
-import {Image, Button} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {Text, View} from 'react-native';
+import {Image} from 'react-native-elements';
 import SplashScreen from 'react-native-splash-screen';
 
 const App = () => {
@@ -64,10 +62,3 @@ const App = () => {
 };
 
 export default App;
-// export default class App extends Component {
-//   render() {
-//     return (
-
-//     );
-//   }
-// }

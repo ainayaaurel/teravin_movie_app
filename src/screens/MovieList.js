@@ -6,12 +6,8 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView,
-  Modal,
-  ScrollView,
 } from 'react-native';
 import {Header, Card, Image, Rating, Button} from 'react-native-elements';
-
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 // import redux
 import {connect} from 'react-redux';
